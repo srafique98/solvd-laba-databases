@@ -3,18 +3,18 @@ package com.solvd.laba.domain;
 import java.util.List;
 
 public class Customer {
-    private long id;
+    private Long id;
     private String name;
     private String phoneNumber;
     private List<Transaction> transactions;
     private List<Account> accounts;
     private List<Loan> loans;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,4 +57,17 @@ public class Customer {
     public void setLoans(List<Loan> loans) {
         this.loans = loans;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", transactions=" + transactions +
+                ", accounts=" + accounts +
+                ", loans=" + loans +
+                '}';
+    }
 }
+

@@ -1,15 +1,15 @@
 package com.solvd.laba.domain;
 
 public class Credential {
-    private long id;
+    private Long id;
     private String email;
     private String password;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -4,17 +4,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Account {
-    private long id;
+    private Long id;
     private double balance;
     private String type;
     private LocalDate openDate;
     private List<Statement> statements;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

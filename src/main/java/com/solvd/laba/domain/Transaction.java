@@ -3,16 +3,16 @@ package com.solvd.laba.domain;
 import java.time.LocalDate;
 
 public class Transaction {
-    private long id;
+    private Long id;
     private double amount;
     private String type;
     private LocalDate date;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

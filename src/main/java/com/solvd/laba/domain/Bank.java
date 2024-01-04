@@ -3,7 +3,7 @@ package com.solvd.laba.domain;
 import java.util.List;
 
 public class Bank {
-    private long id;
+    private Long id;
     private String name;
     private String phoneNumber;
     private Location location;
@@ -11,11 +11,11 @@ public class Bank {
     private List<Employee> employees;
     private List<Customer> customers;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

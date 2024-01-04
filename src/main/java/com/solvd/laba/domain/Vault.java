@@ -3,15 +3,15 @@ package com.solvd.laba.domain;
 import java.util.List;
 
 public class Vault {
-    private long id;
+    private Long id;
     private int capacity;
     private List<String> items;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
