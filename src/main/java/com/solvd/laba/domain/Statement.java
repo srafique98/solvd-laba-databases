@@ -6,7 +6,7 @@ import java.util.List;
 public class Statement {
     private Long id;
     private double startBalance;
-    private String endBalance;
+    private double endBalance;
     private LocalDate openDate;
     private LocalDate endDate;
 
@@ -26,11 +26,11 @@ public class Statement {
         this.startBalance = startBalance;
     }
 
-    public String getEndBalance() {
+    public double getEndBalance() {
         return endBalance;
     }
 
-    public void setEndBalance(String endBalance) {
+    public void setEndBalance(double endBalance) {
         this.endBalance = endBalance;
     }
 

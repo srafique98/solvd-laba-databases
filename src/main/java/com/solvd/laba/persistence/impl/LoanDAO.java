@@ -20,20 +20,23 @@ public class LoanDAO implements LoanRepository {
     public void create(Loan loan, Long customerId) {
         Connection connection = CONNECTION_POOL.getConnection();
         String createQuery = "INSERT INTO loans (amount, type, interest_rate, start_date, end_date, customer_id) VALUES (?, ?, ?, ?, ?, ?)";
+        LOGGER.info("0");
         try (PreparedStatement preparedStatement = connection.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS)){
+            LOGGER.info("1");
             preparedStatement.setDouble(1, loan.getAmount());
             preparedStatement.setString(2, loan.getType());
             preparedStatement.setDouble(3, loan.getInterestRate());
-
+            LOGGER.info("2");
             java.sql.Date sqlStartDate = java.sql.Date.valueOf(loan.getStartDate());
             java.sql.Date sqlEndDate = java.sql.Date.valueOf(loan.getEndDate());
             preparedStatement.setDate(4,sqlStartDate );
             preparedStatement.setDate(5, sqlEndDate);
             preparedStatement.setLong(6, customerId);
-
+            LOGGER.info("3");
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()){
+                LOGGER.info("4");
                 loan.setId(resultSet.getLong(1));
             }
             LOGGER.info("Loan created: " + loan.toString());
@@ -50,7 +53,7 @@ public class LoanDAO implements LoanRepository {
     public List<Loan> findLoansAfter(LocalDate date) {
         List<Loan> loans = new ArrayList<>();
         Connection connection = CONNECTION_POOL.getConnection();
-        String afterDateQuery = "SELECT l.id, l.type, l.amount, l.interest_rate, l.start_date, l.end_date FROM loans l WHERE start_date > ?";
+        String afterDateQuery = "SELECT l.id AS loan_id, l.type AS loan_type, l.amount AS loan_amount, l.interest_rate AS loan_interest_rate, l.start_date AS loan_start_date, l.end_date AS loan_end_date FROM loans l WHERE start_date > ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(afterDateQuery)){
             java.sql.Date sqlDate = java.sql.Date.valueOf(date);
             preparedStatement.setDate(1, sqlDate);
@@ -106,6 +109,9 @@ public class LoanDAO implements LoanRepository {
     }
 
     public static List<Loan> mapRow(ResultSet resultSet, List<Loan> loans) throws SQLException{
+        if (loans == null){
+            loans = new ArrayList<>();
+        }
         loans.add(mapRow(resultSet));
         return loans;
     }
@@ -114,18 +120,18 @@ public class LoanDAO implements LoanRepository {
         Loan loan = null;
 
         LOGGER.info("Mapping row with return Loan");
-        long id = resultSet.getLong("id");
+        long id = resultSet.getLong("loan_id");
         if (id != 0){
             loan = new Loan();
             loan.setId(id);
-            loan.setAmount(resultSet.getDouble("amount"));
-            loan.setInterestRate(resultSet.getDouble("interest_rate"));
-            loan.setType(resultSet.getString("type"));
+            loan.setAmount(resultSet.getDouble("loan_amount"));
+            loan.setInterestRate(resultSet.getDouble("loan_interest_rate"));
+            loan.setType(resultSet.getString("loan_type"));
 
-            java.sql.Timestamp startDateTimestamp = resultSet.getTimestamp("start_date");
+            java.sql.Timestamp startDateTimestamp = resultSet.getTimestamp("loan_start_date");
             loan.setStartDate(startDateTimestamp == null ? null : startDateTimestamp.toLocalDateTime().toLocalDate());
 
-            java.sql.Timestamp endDateTimestamp = resultSet.getTimestamp("end_date");
+            java.sql.Timestamp endDateTimestamp = resultSet.getTimestamp("loan_end_date");
             loan.setEndDate(endDateTimestamp == null ? null : endDateTimestamp.toLocalDateTime().toLocalDate());
         }
 

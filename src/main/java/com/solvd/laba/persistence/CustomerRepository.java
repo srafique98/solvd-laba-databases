@@ -9,4 +9,5 @@ public interface CustomerRepository {
     void create(Customer customer);
     List<Customer> findAllCustomerAccounts();
     void update(Customer customer);
+    Optional<Customer> findById(Long id);
 }

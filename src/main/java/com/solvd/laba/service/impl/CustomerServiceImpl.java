@@ -9,12 +9,12 @@ import com.solvd.laba.service.LoanService;
 import com.solvd.laba.service.TransactionService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository; // customerDAO
     private final LoanService loanService; // service can talk to service
     private final TransactionService transactionService;
-
     private final AccountService accountService;
 
     public CustomerServiceImpl() {
@@ -58,6 +58,11 @@ public class CustomerServiceImpl implements CustomerService {
     public void update(Customer customer) {
         customerRepository.update(customer);
 
+    }
+
+    @Override
+    public Optional<Customer> findById(Long id){
+        return customerRepository.findById(id);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.solvd.laba.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Account {
@@ -48,5 +49,15 @@ public class Account {
 
     public void setStatements(List<Statement> statements) {
         this.statements = statements;
+    }
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", balance=" + balance +
+                ", type='" + type + '\'' +
+                ", openDate=" + openDate +
+                ", statements=" + statements +
+                '}';
     }
 }

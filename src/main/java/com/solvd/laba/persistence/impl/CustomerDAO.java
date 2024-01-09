@@ -57,23 +57,41 @@ public class CustomerDAO implements CustomerRepository {
         return customers;
     }
 
-//    public Optional<Customer> findById(Long id){
-//        Optional<Customer> result = Optional.empty();
-//        Connection connection = CONNECTION_POOL.getConnection();
-//        String findIdQuery = "SELECT c.name, c.phone_number FROM customers c WHERE id = ?";
-//        try(PreparedStatement preparedStatement = connection.prepareStatement(findIdQuery)){
-//            preparedStatement.setLong(1,id);
-//
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            result = mapCustomer(resultSet);
-//
-//        }catch (SQLException e) {
-//            LOGGER.error(e.getMessage());
-//        } finally {
-//            CONNECTION_POOL.releaseConnection(connection);
-//        }
-//        return result;
-//    }
+    @Override
+    public Optional<Customer> findById(Long id){
+        Optional<Customer> result = Optional.empty();
+        Connection connection = CONNECTION_POOL.getConnection();
+
+        String findIdQuery = "SELECT c.id AS customer_id, c.name AS customer_name, c.phone_number AS customer_phone_number, " +
+                "t.id AS transaction_id, t.amount AS transaction_amount, t.type AS transaction_type, t.date AS transaction_date, " +
+                "l.id AS loan_id, l.amount AS loan_amount, l.type AS loan_type, l.interest_rate AS loan_interest_rate, l.start_date AS loan_start_date, l.end_date AS loan_end_date, " +
+                "a.id AS account_id, a.type AS account_type, a.opening_date AS account_opening_date, a.balance AS account_balance, " +
+                "s.id AS statement_id, s.start_date AS statement_start_date, s.end_date AS statement_end_date, s.starting_balance AS statement_starting_balance, s.ending_balance AS statement_ending_balance " +
+                "FROM customers c " +
+                "LEFT JOIN transactions t ON c.id = t.customer_id " +
+                "LEFT JOIN loans l ON c.id = l.customer_id " +
+                "LEFT JOIN accounts a ON c.id = a.customer_id " +
+                "LEFT JOIN statements s ON a.id = s.account_id " +
+                "WHERE c.id = ?";
+
+//                "SELECT c.id AS customer_id, c.name AS customer_name, c.phone_number AS customer_phone_number, " +
+//                        "t.id AS transaction_id, t.amount AS transaction_amount, t.type AS transaction_type, t.date AS transaction_date FROM customers c " +
+//                        "LEFT JOIN transactions t ON c.id = t.customer_id " +
+//                        "WHERE c.id = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(findIdQuery)){
+            preparedStatement.setLong(1,id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            result = mapCustomer(resultSet);
+
+        }catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return result;
+    }
+
 
     @Override
     public void update(Customer customer){
@@ -113,17 +131,16 @@ public class CustomerDAO implements CustomerRepository {
     public static Customer mapRow(ResultSet resultSet) throws SQLException {
         Customer customer = null;
 
-        long id = resultSet.getLong("id");
+        long id = resultSet.getLong("customer_id");
         if (id != 0){
             customer = new Customer();
             customer.setId(id);
-            customer.setName(resultSet.getString("name"));
-            customer.setPhoneNumber(resultSet.getString("phone_number"));
+            customer.setName(resultSet.getString("customer_name"));
+            customer.setPhoneNumber(resultSet.getString("customer_phone_number"));
 
             customer.setLoans(LoanDAO.mapRow(resultSet,customer.getLoans()));
-            customer.setTransactions(TransactionDAO.mapRow(resultSet,customer.getTransactions()));
+            customer.setTransactions(TransactionDAO.mapRow(resultSet, customer.getTransactions()));
             customer.setAccounts(AccountDAO.mapRow(resultSet,customer.getAccounts()));
-
         }
 
         return customer;

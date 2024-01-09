@@ -24,7 +24,7 @@ public class TransactionDAO implements TransactionRepository {
             preparedStatement.setString(2,transaction.getType());
             java.sql.Date sqlStartDate = java.sql.Date.valueOf(transaction.getDate());
             preparedStatement.setDate(3,sqlStartDate );
-            preparedStatement.setLong(6, customerId);
+            preparedStatement.setLong(4, customerId);
 
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -44,7 +44,7 @@ public class TransactionDAO implements TransactionRepository {
     public Optional<Transaction> findById(Long id){
         Optional<Transaction> result = Optional.empty();
         Connection connection = CONNECTION_POOL.getConnection();
-        String findIdQuery = "SELECT t.amount, t.type, t.date FROM transactions t WHERE id = ?";
+        String findIdQuery = "SELECT t.id AS transaction_id, t.amount AS transaction_amount, t.type AS transaction_type, t.date AS transaction_date FROM transactions t WHERE id = ?";
         try(PreparedStatement preparedStatement = connection.prepareStatement(findIdQuery)){
             preparedStatement.setLong(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -92,19 +92,22 @@ public class TransactionDAO implements TransactionRepository {
     }
 
     public static List<Transaction> mapRow(ResultSet resultSet, List<Transaction> transactions) throws SQLException{
+        if (transactions == null){
+            transactions = new ArrayList<>();
+        }
         transactions.add(mapRow(resultSet));
         return transactions;
     }
 
     public static Transaction mapRow(ResultSet resultSet) throws SQLException {
         Transaction transaction = null;
-        long id = resultSet.getLong("id");
+        long id = resultSet.getLong("transaction_id");
         if (id != 0){
             transaction = new Transaction();
             transaction.setId(id);
-            transaction.setAmount(resultSet.getDouble("amount"));
-            transaction.setType(resultSet.getString("type"));
-            java.sql.Timestamp Timestamp = resultSet.getTimestamp("date");
+            transaction.setAmount(resultSet.getDouble("transaction_amount"));
+            transaction.setType(resultSet.getString("transaction_type"));
+            java.sql.Timestamp Timestamp = resultSet.getTimestamp("transaction_date");
             transaction.setDate(Timestamp == null ? null : Timestamp.toLocalDateTime().toLocalDate());
         }
         return transaction;

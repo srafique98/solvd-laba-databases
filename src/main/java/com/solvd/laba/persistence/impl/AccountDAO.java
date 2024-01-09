@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO implements AccountRepository {
-
     private static final Logger LOGGER = LogManager.getLogger(LoanDAO.class);
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
@@ -45,7 +44,14 @@ public class AccountDAO implements AccountRepository {
     public List<Account> findBalanceBiggerThan(double amount) {
         List<Account> accounts = new ArrayList<>();
         Connection connection = CONNECTION_POOL.getConnection();
-        String bigBalanceQuery = "SELECT a.id, a.type, a.opening_date, a.balance FROM accounts a WHERE balance > ?";
+        String bigBalanceQuery = "SELECT a.id AS account_id, a.type AS account_type, a.opening_date AS account_opening_date, a.balance AS account_balance, " +
+                "s.id AS statement_id, s.start_date AS statement_start_date, s.end_date AS statement_end_date, s.starting_balance AS statement_starting_balance, s.ending_balance AS statement_ending_balance " +
+                "FROM accounts a " +
+                "JOIN statements s ON a.id = s.account_id " +
+                "WHERE a.balance > ?";
+//        "SELECT a.id, a.type, a.opening_date, a.balance " +
+//                "FROM accounts a WHERE balance > ?";
+
         try(PreparedStatement preparedStatement = connection.prepareStatement(bigBalanceQuery)){
             preparedStatement.setDouble(1, amount);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -86,12 +92,16 @@ public class AccountDAO implements AccountRepository {
         LOGGER.info("Mapping Accounts");
         List<Account> accounts = new ArrayList<>();
         while (resultSet.next()){
+            LOGGER.info("Mapping Accounts iterating through resultset");
             mapRow(resultSet, accounts);
         }
         return accounts;
     }
 
     public static List<Account> mapRow(ResultSet resultSet, List<Account> accounts) throws SQLException{
+        if (accounts == null){
+            accounts = new ArrayList<>();
+        }
         accounts.add(mapRow(resultSet));
         return accounts;
     }
@@ -100,15 +110,19 @@ public class AccountDAO implements AccountRepository {
         Account account = null;
 
         LOGGER.info("Mapping row with return Account");
-        long id = resultSet.getLong("id");
+        long id = resultSet.getLong("account_id");
         if (id != 0){
             account = new Account();
             account.setId(id);
-            account.setBalance(resultSet.getDouble("balance"));
-            account.setType(resultSet.getString("type"));
+            account.setBalance(resultSet.getDouble("account_balance"));
+            account.setType(resultSet.getString("account_type"));
 
-            java.sql.Timestamp startDateTimestamp = resultSet.getTimestamp("opening_date");
+            java.sql.Timestamp startDateTimestamp = resultSet.getTimestamp("account_opening_date");
             account.setOpenDate(startDateTimestamp == null ? null : startDateTimestamp.toLocalDateTime().toLocalDate());
+
+            account.setStatements(StatementDAO.mapRow(resultSet, account.getStatements()));
+
+
 
         }
 
