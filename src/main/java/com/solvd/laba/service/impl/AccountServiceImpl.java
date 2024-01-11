@@ -4,6 +4,7 @@ import com.solvd.laba.domain.Account;
 import com.solvd.laba.persistence.AccountRepository;
 import com.solvd.laba.persistence.impl.AccountDAO;
 import com.solvd.laba.persistence.impl.LoanDAO;
+import com.solvd.laba.persistence.mybatis.AccountMyBatisDAO;
 import com.solvd.laba.service.AccountService;
 import com.solvd.laba.service.StatementService;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +18,9 @@ public class AccountServiceImpl implements AccountService {
     private final StatementService statementService;
 
     public AccountServiceImpl() {
-        this.accountRepository = new AccountDAO();
+//        this.accountRepository = new AccountDAO();
+        this.accountRepository = new AccountMyBatisDAO();
+
         this.statementService = new StatementServiceImpl();
     }
 

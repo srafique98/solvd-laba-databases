@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.laba.persistence.AccountRepository">
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO accounts (balance, type, opening_date, customer_id) VALUES (#{account.balance},
+        #{account.type}, #{account.openDate}, #{customerID})
+    </insert>
+
+    <update id="update">
+        UPDATE accounts SET balance = #{balance}, type = #{type}, opening_date = #{openDate} WHERE id = #{id}
+    </update>
+
+    <sql id="FindBiggerBalanceSelect">
+        SELECT a.id AS account_id, a.type AS account_type, a.opening_date AS account_opening_date, a.balance AS account_balance,
+        s.id AS statement_id, s.start_date AS statement_start_date, s.end_date AS statement_end_date, s.starting_balance AS statement_starting_balance, s.ending_balance AS statement_ending_balance
+        FROM accounts a
+        JOIN statements s ON a.id = s.account_id
+
+    </sql>
+
+    <select id="findBalanceBiggerThan" resultMap="AccountResultMap">
+        <include refid="FindBiggerBalanceSelect"/>
+        WHERE a.balance <![CDATA[ > ]]> #{amount}
+    </select>
+
+<!--    void create(@Param("account") Account account, @Param("customerID") Long customerID);-->
+<!--    List<Account> findBalanceBiggerThan(double amount);-->
+<!--    void update(Account account);-->
+
+    <resultMap id="AccountResultMap" type="com.solvd.laba.domain.Account" autoMapping="false">
+        <id property="id" column="account_id"/>
+        <result property="balance" column="account_balance"/>
+        <result property="type" column="account_type"/>
+        <result property="openDate" column="account_opening_date"/>
+        <collection property="statements"
+                    resultMap="com.solvd.laba.persistence.StatementRepository.StatementResultMap"/>
+
+    </resultMap>
+
+<!--    private Long id;-->
+<!--    private double balance;-->
+<!--    private String type;-->
+<!--    private LocalDate openDate;-->
+<!--    private List<Statement> statements;-->
+</mapper>

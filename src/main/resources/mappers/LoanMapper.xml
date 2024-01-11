@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.solvd.laba.persistence.LoanRepository">
+    <!-- id should be same name as methods in LoanRepository-->
+<!-- keyColumn is the PK in mysql tables while keyProperty shows that its similar to our id field in our java class -->
+<!--  #{amount}... #{type}.. etc.. are our fields from our Loan Domain class-->
+    <insert id="create" keyColumn="id" keyProperty="loan.id" useGeneratedKeys="true" >
+        INSERT INTO loans (amount, type, interest_rate, start_date, end_date, customer_id) VALUES (#{loan.amount},
+        #{loan.type} ,#{loan.interestRate} ,#{loan.startDate} ,#{loan.endDate} ,#{customerID})
+    </insert>
+
+    <update id="update">
+        UPDATE loans SET amount = #{amount}, interest_rate = #{interestRate}, type = #{type},
+        end_date = #{endDate} WHERE id = #{id}
+    </update>
+    
+    <sql id="loanAfterSelect">
+        SELECT l.id AS loan_id, l.type AS loan_type, l.amount AS loan_amount,
+        l.interest_rate AS loan_interest_rate, l.start_date AS loan_start_date,
+        l.end_date AS loan_end_date FROM loans l
+    </sql>
+
+    <select id="findLoansAfter" resultMap="LoanResultMap">
+        <include refid="loanAfterSelect"/>
+        WHERE start_date <![CDATA[ > ]]> #{startDate}
+    </select>
+
+    <resultMap id="LoanResultMap" type="com.solvd.laba.domain.Loan" autoMapping="false">
+        <id column="loan_id" property="id"/>
+        <result column="loan_type" property="type"/>
+        <result column="loan_amount" property="amount"/>
+        <result column="loan_interest_rate" property="interestRate"/>
+        <result column="loan_start_date" property="startDate"/>
+        <result column="loan_end_date" property="endDate"/>
+    </resultMap>
+
+
+</mapper>

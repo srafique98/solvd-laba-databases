@@ -3,6 +3,7 @@ package com.solvd.laba.service.impl;
 import com.solvd.laba.domain.Transaction;
 import com.solvd.laba.persistence.TransactionRepository;
 import com.solvd.laba.persistence.impl.TransactionDAO;
+import com.solvd.laba.persistence.mybatis.TransactionMyBatisDAO;
 import com.solvd.laba.service.TransactionService;
 
 import java.util.Optional;
@@ -11,7 +12,9 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
 
     public TransactionServiceImpl( ) {
-        this.transactionRepository = new TransactionDAO();
+
+//        this.transactionRepository = new TransactionDAO();
+        this.transactionRepository = new TransactionMyBatisDAO();
     }
 
     @Override

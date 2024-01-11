@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.laba.persistence.StatementRepository">
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO statements (start_date, end_date, starting_balance, ending_balance, account_id) VALUES
+        (#{statement.openDate},#{statement.endDate},#{statement.startBalance},#{statement.endBalance},#{accountID})
+    </insert>
+
+    <update id="update">
+        UPDATE statements SET start_date = #{openDate}, end_date = #{endDate}, starting_balance = #{startBalance}, ending_balance = #{endBalance} WHERE id = #{id}
+    </update>
+
+    <sql id="FindByIdSelect">
+        SELECT s.start_date AS statement_start_date, s.end_date AS statement_end_date,
+        s.starting_balance AS statement_starting_balance,
+        s.ending_balance AS statement_ending_balance, s.id AS statement_id
+        FROM statements s
+
+    </sql>
+
+    <select id="findById" resultMap="StatementResultMap">
+        <include refid="FindByIdSelect"/>
+        WHERE s.id = #{id}
+    </select>
+<!--    void create(@Param("statement") Statement statement, @Param("accountID") Long accountID);-->
+<!--    Optional<Statement> findById(Long id);-->
+<!--    void update(Statement statement);-->
+
+
+
+<!--    private Long id;-->
+<!--    private double startBalance;-->
+<!--    private double endBalance;-->
+<!--    private LocalDate openDate;-->
+<!--    private LocalDate endDate;-->
+
+    <resultMap id="StatementResultMap" type="com.solvd.laba.domain.Statement" autoMapping="false">
+        <id property="id" column="statement_id"/>
+        <result property="startBalance" column="statement_starting_balance"/>
+        <result property="endBalance" column="statement_ending_balance"/>
+        <result property="openDate" column="statement_start_date"/>
+        <result property="endDate" column="statement_end_date"/>
+
+    </resultMap>
+
+</mapper>

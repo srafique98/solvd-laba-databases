@@ -1,14 +1,22 @@
 package com.solvd.laba;
 
 import com.solvd.laba.domain.*;
+import com.solvd.laba.domain.exception.ResourceNotFoundException;
+import com.solvd.laba.persistence.CustomerRepository;
 import com.solvd.laba.service.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.solvd.laba.service.impl.*;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,10 +24,10 @@ public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
     public static void main(String[] args) {
         LoanService loanService = new LoanServiceImpl();
-        StatementService statementService = new StatementServiceImpl();
-        AccountService accountService = new AccountServiceImpl();
-        TransactionService transactionService = new TransactionServiceImpl();
-        CustomerService customerService = new CustomerServiceImpl();
+//        StatementService statementService = new StatementServiceImpl();
+//        AccountService accountService = new AccountServiceImpl();
+//        TransactionService transactionService = new TransactionServiceImpl();
+//        CustomerService customerService = new CustomerServiceImpl();
 
 
 //        // FINDING LOAN
@@ -100,12 +108,12 @@ public class Main {
 //        System.out.println("Created Account: " + newAccount);
 
         // FIND ACCOUNTS BY BALANCE
-        double balanceToFind = 3000.0;
-        List<Account> accountsWithBigBalance = accountService.retrieveBalance(balanceToFind);
-        System.out.println("Accounts with balance bigger than " + balanceToFind + ":");
-        for (Account account : accountsWithBigBalance) {
-            System.out.println(account.toString());
-        }
+//        double balanceToFind = 3000.0;
+//        List<Account> accountsWithBigBalance = accountService.retrieveBalance(balanceToFind);
+//        System.out.println("Accounts with balance bigger than " + balanceToFind + ":");
+//        for (Account account : accountsWithBigBalance) {
+//            System.out.println(account.toString());
+//        }
 
         // UPDATE ACCOUNT
 //        if (!accountsWithBigBalance.isEmpty()) {
@@ -148,15 +156,15 @@ public class Main {
 //        }
 
 //        Customer createdCustomer = testCustomerService(customerService);
-
-        // Test findById method
-        System.out.println("\n\nFinding customer by ID...");
-        Optional<Customer> foundCustomer = customerService.findById(1L);
-        if (foundCustomer.isPresent()) {
-            System.out.println("Found Customer ID " + 1L + ": " + foundCustomer.get());
-        } else {
-            System.out.println("Customer ID " + 1L + " not found.");
-        }
+//
+//        // Test findById method
+//        System.out.println("\n\nFinding customer by ID...");
+//        Optional<Customer> foundCustomer = customerService.findById(1L);
+//        if (foundCustomer.isPresent()) {
+//            System.out.println("Found Customer ID " + 1L + ": " + foundCustomer.get());
+//        } else {
+//            System.out.println("Customer ID " + 1L + " not found.");
+//        }
 
         // Test update method
 //        System.out.println("Updating customer...");
@@ -165,18 +173,30 @@ public class Main {
 //        customerService.update(createdCustomer);
 //        System.out.println("Customer updated: " + createdCustomer);
 
+        List<Loan> loans = new ArrayList<>();
+        Loan loan1 = new Loan();
+        loan1.setAmount(8100.0);
+        loan1.setType("Personal");
+        loan1.setInterestRate(7.0);
+        loan1.setStartDate(LocalDate.now().minusMonths(3));
+        loan1.setEndDate(LocalDate.now().plusMonths(9));
+        loans.add(loan1);
+
+        Loan createdLoan = loanService.create(loan1, 6L);
+        System.out.println("Created Loan: " + createdLoan);
+
 
     }
 
     private static Customer testCustomerService(CustomerService customerService) {
         Customer customer = new Customer();
-        customer.setName("Julius Pope");
-        customer.setPhoneNumber("473-443-4938");
+        customer.setName("Do dont");
+        customer.setPhoneNumber("323-432-4332");
 
         // fake data for transactions
         List<Transaction> transactions = new ArrayList<>();
         Transaction transaction1 = new Transaction();
-        transaction1.setAmount(1000.0);
+        transaction1.setAmount(2600.0);
         transaction1.setType("Deposit");
         transaction1.setDate(LocalDate.now().minusDays(5));
         transactions.add(transaction1);
@@ -184,14 +204,14 @@ public class Main {
         // fake data for loans
         List<Loan> loans = new ArrayList<>();
         Loan loan1 = new Loan();
-        loan1.setAmount(2000.0);
+        loan1.setAmount(8100.0);
         loan1.setType("Student");
         loan1.setInterestRate(7.0);
         loan1.setStartDate(LocalDate.now().minusMonths(3));
         loan1.setEndDate(LocalDate.now().plusMonths(9));
         loans.add(loan1);
 
-        // Generate fake data for accounts
+        // fake data for accounts
         List<Account> accounts = new ArrayList<>();
         Account account1 = new Account();
         account1.setBalance(2000.0);

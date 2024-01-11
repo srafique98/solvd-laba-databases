@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.laba.persistence.TransactionRepository">
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO transactions (amount, type, date, customer_id) VALUES (#{transaction.amount},
+        #{transaction.type},#{transaction.date},#{customerId})
+    </insert>
+
+    <update id="update">
+        UPDATE transactions SET amount = #{amount}, type = #{type}, date = #{date} WHERE id = #{id}
+    </update>
+
+    <sql id="FindByIdSelect">
+        SELECT t.id AS transaction_id, t.amount AS transaction_amount,
+        t.type AS transaction_type, t.date AS transaction_date FROM transactions t
+    </sql>
+
+    <select id="findById" resultMap="TransactionResultMap">
+        <include refid="FindByIdSelect"/>
+        WHERE t.id = #{id}
+    </select>
+
+<!--    void create(@Param("transaction") Transaction transaction, @Param("customerId") Long customerId);-->
+<!--    Optional<Transaction> findById(Long id);-->
+<!--    void update(Transaction transaction);-->
+
+<!--    private Long id;-->
+<!--    private double amount;-->
+<!--    private String type;-->
+<!--    private LocalDate date;-->
+
+    <resultMap id="TransactionResultMap" type="com.solvd.laba.domain.Transaction" autoMapping="false">
+        <id property="id" column="transaction_id"/>
+        <result property="amount" column="transaction_amount"/>
+        <result property="type" column="transaction_type"/>
+        <result property="date" column="transaction_date"/>
+    </resultMap>
+
+</mapper>

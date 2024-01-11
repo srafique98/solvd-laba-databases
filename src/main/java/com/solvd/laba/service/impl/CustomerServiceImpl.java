@@ -3,6 +3,7 @@ package com.solvd.laba.service.impl;
 import com.solvd.laba.domain.Customer;
 import com.solvd.laba.persistence.CustomerRepository;
 import com.solvd.laba.persistence.impl.CustomerDAO;
+import com.solvd.laba.persistence.mybatis.CustomerMyBatisDAO;
 import com.solvd.laba.service.AccountService;
 import com.solvd.laba.service.CustomerService;
 import com.solvd.laba.service.LoanService;
@@ -18,7 +19,8 @@ public class CustomerServiceImpl implements CustomerService {
     private final AccountService accountService;
 
     public CustomerServiceImpl() {
-        this.customerRepository = new CustomerDAO();
+//        this.customerRepository = new CustomerDAO();
+        this.customerRepository = new CustomerMyBatisDAO();
         this.loanService = new LoanServiceImpl();
         this.transactionService = new TransactionServiceImpl();
         this.accountService = new AccountServiceImpl();
