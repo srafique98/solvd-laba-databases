@@ -3,7 +3,7 @@
 
 <mapper namespace="com.solvd.laba.persistence.TransactionRepository">
 
-    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+    <insert id="create" keyColumn="id" keyProperty="transaction.id" useGeneratedKeys="true">
         INSERT INTO transactions (amount, type, date, customer_id) VALUES (#{transaction.amount},
         #{transaction.type},#{transaction.date},#{customerId})
     </insert>

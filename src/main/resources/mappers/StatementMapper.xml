@@ -3,7 +3,7 @@
 
 <mapper namespace="com.solvd.laba.persistence.StatementRepository">
 
-    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+    <insert id="create" keyColumn="id" keyProperty="statement.id" useGeneratedKeys="true">
         INSERT INTO statements (start_date, end_date, starting_balance, ending_balance, account_id) VALUES
         (#{statement.openDate},#{statement.endDate},#{statement.startBalance},#{statement.endBalance},#{accountID})
     </insert>

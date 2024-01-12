@@ -3,7 +3,7 @@
 
 <mapper namespace="com.solvd.laba.persistence.AccountRepository">
 
-    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+    <insert id="create" keyColumn="id" keyProperty="account.id" useGeneratedKeys="true">
         INSERT INTO accounts (balance, type, opening_date, customer_id) VALUES (#{account.balance},
         #{account.type}, #{account.openDate}, #{customerID})
     </insert>
