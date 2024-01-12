@@ -1,0 +1,33 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:complexType name="TransactionType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:integer"/>
+            <xs:element name="amount" type="xs:double"/>
+            <xs:element name="type" type="xs:string"/>
+            <xs:element name="date" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="TransactionsType">
+        <xs:sequence>
+            <xs:element name="transaction" type="TransactionType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="customerType">
+        <xs:sequence>   <!--can have however many tags we want-->
+            <xs:element name="transactions" type="TransactionsType"/>
+
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:element name="customer" type="customerType"/>
+
+</xs:schema>
+
+
+
+
+<!--<xs:element name="accounts" type=""/>-->
+<!--<xs:element name="loans" type=""/>-->

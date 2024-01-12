@@ -1,0 +1,66 @@
+<customer >
+    <name>Name1</name>
+    <phoneNumber>473-394-0394</phoneNumber>
+
+    <transactions>
+        <transaction id="1">
+            <amount>1600.0</amount>
+            <type>Deposit</type>
+            <date>2024-01-07</date>
+        </transaction>
+    </transactions>
+
+    <accounts>
+        <account id="1">
+            <balance>300</balance>
+            <type>Checking</type>
+            <openDate>2023-04-01</openDate>
+            <statements>
+                <statement id="1">
+                    <startBalance>2382</startBalance>
+                    <endBalance>1800</endBalance>
+                    <openDate>2023-02-11</openDate>
+                    <endDate>2023-03-11</endDate>
+                </statement>
+                <statement id="2">
+                    <startBalance>543</startBalance>
+                    <endBalance>1000</endBalance>
+                    <openDate>2022-06-11</openDate>
+                    <endDate>2023-07-11</endDate>
+                </statement>
+            </statements>
+        </account>
+
+        <account id="2">
+            <balance>9000</balance>
+            <type>Saving</type>
+            <openDate>2021-09-17</openDate>
+            <statements>
+                <statement id="3">
+                    <startBalance>3000</startBalance>
+                    <endBalance>6000</endBalance>
+                    <openDate>2021-10-11</openDate>
+                    <endDate>2021-11-11</endDate>
+                </statement>
+                <statement id="4">
+                    <startBalance>1500</startBalance>
+                    <endBalance>3000</endBalance>
+                    <openDate>2022-06-11</openDate>
+                    <endDate>2022-07-11</endDate>
+                </statement>
+            </statements>
+        </account>
+    </accounts>
+
+    <loans>
+        <loan id="1">
+            <amount>2200</amount>
+            <interestRate>3.0</interestRate>
+            <type>Student</type>
+            <startDate>2023-01-17</startDate>
+            <endDate>2024-01-17</endDate>
+        </loan>
+    </loans>
+
+
+</customer>
