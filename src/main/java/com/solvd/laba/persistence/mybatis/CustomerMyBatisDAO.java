@@ -18,7 +18,10 @@ public class CustomerMyBatisDAO implements CustomerRepository {
 
     @Override
     public List<Customer> findAllCustomerAccounts() {
-        return null;
+        try (SqlSession sqlSession = PersistenceConfig.getSessionFactory().openSession(true)){
+            CustomerRepository customerRepository = sqlSession.getMapper(CustomerRepository.class);
+            return customerRepository.findAllCustomerAccounts();
+        }
     }
 
     @Override

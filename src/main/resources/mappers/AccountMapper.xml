@@ -25,10 +25,6 @@
         WHERE a.balance <![CDATA[ > ]]> #{amount}
     </select>
 
-<!--    void create(@Param("account") Account account, @Param("customerID") Long customerID);-->
-<!--    List<Account> findBalanceBiggerThan(double amount);-->
-<!--    void update(Account account);-->
-
     <resultMap id="AccountResultMap" type="com.solvd.laba.domain.Account" autoMapping="false">
         <id property="id" column="account_id"/>
         <result property="balance" column="account_balance"/>
@@ -39,9 +35,4 @@
 
     </resultMap>
 
-<!--    private Long id;-->
-<!--    private double balance;-->
-<!--    private String type;-->
-<!--    private LocalDate openDate;-->
-<!--    private List<Statement> statements;-->
 </mapper>

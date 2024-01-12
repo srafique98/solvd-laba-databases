@@ -44,8 +44,16 @@ public class CustomerDAO implements CustomerRepository {
     public List<Customer> findAllCustomerAccounts() {
         List<Customer> customers = null;
         Connection connection = CONNECTION_POOL.getConnection();
-        String allCustomerAccountsQuery = "SELECT c.id AS customer_id, c.name AS customer_name, a.id AS account_id, a.type AS account_type " +
-                "FROM customers c INNER JOIN accounts a ON c.id = a.customer_id";
+        String allCustomerAccountsQuery = "SELECT c.id AS customer_id, c.name AS customer_name, c.phone_number," +
+                "t.id AS transaction_id, t.amount AS transaction_amount, t.type AS transaction_type, t.date AS transaction_date," +
+                "l.id AS loan_id, l.amount AS loan_amount, l.type AS loan_type, l.interest_rate AS loan_interest_rate, l.start_date AS loan_start_date, l.end_date AS loan_end_date," +
+                "a.id AS account_id, a.type AS account_type, a.opening_date AS account_opening_date, a.balance AS account_balance," +
+                "s.id AS statement_id, s.start_date AS statement_start_date, s.end_date AS statement_end_date, s.starting_balance AS statement_starting_balance, s.ending_balance AS statement_ending_balance " +
+                "FROM customers c" +
+                "LEFT JOIN transactions t ON c.id = t.customer_id " +
+                "LEFT JOIN loans l ON c.id = l.customer_id" +
+                "LEFT JOIN accounts a ON c.id = a.customer_id" +
+                "LEFT JOIN statements s ON a.id = s.account_id";
         try(PreparedStatement preparedStatement = connection.prepareStatement(allCustomerAccountsQuery)){
             ResultSet resultSet = preparedStatement.executeQuery();
             customers = mapCustomers(resultSet);

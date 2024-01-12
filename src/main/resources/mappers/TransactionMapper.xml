@@ -22,15 +22,6 @@
         WHERE t.id = #{id}
     </select>
 
-<!--    void create(@Param("transaction") Transaction transaction, @Param("customerId") Long customerId);-->
-<!--    Optional<Transaction> findById(Long id);-->
-<!--    void update(Transaction transaction);-->
-
-<!--    private Long id;-->
-<!--    private double amount;-->
-<!--    private String type;-->
-<!--    private LocalDate date;-->
-
     <resultMap id="TransactionResultMap" type="com.solvd.laba.domain.Transaction" autoMapping="false">
         <id property="id" column="transaction_id"/>
         <result property="amount" column="transaction_amount"/>

@@ -24,17 +24,6 @@
         <include refid="FindByIdSelect"/>
         WHERE s.id = #{id}
     </select>
-<!--    void create(@Param("statement") Statement statement, @Param("accountID") Long accountID);-->
-<!--    Optional<Statement> findById(Long id);-->
-<!--    void update(Statement statement);-->
-
-
-
-<!--    private Long id;-->
-<!--    private double startBalance;-->
-<!--    private double endBalance;-->
-<!--    private LocalDate openDate;-->
-<!--    private LocalDate endDate;-->
 
     <resultMap id="StatementResultMap" type="com.solvd.laba.domain.Statement" autoMapping="false">
         <id property="id" column="statement_id"/>
