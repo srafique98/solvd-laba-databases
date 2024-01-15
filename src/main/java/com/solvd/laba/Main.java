@@ -209,7 +209,7 @@ public class Main {
         // fake data for accounts
         List<Account> accounts = new ArrayList<>();
         Account account1 = new Account();
-        account1.setBalance(1000.0);
+        account1.setBalance(9900.00);
         account1.setType("Checking");
         account1.setOpenDate(LocalDate.now().minusYears(1));
         accounts.add(account1);

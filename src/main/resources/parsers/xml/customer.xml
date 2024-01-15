@@ -1,11 +1,12 @@
-<customer >
+<customer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="customer.xsd" id="1">
     <name>Name1</name>
     <phoneNumber>473-394-0394</phoneNumber>
 
     <transactions>
         <transaction id="1">
             <amount>1600.0</amount>
-            <type>Deposit</type>
+            <transactionType>Deposit</transactionType>
             <date>2024-01-07</date>
         </transaction>
     </transactions>
@@ -13,8 +14,8 @@
     <accounts>
         <account id="1">
             <balance>300</balance>
-            <type>Checking</type>
-            <openDate>2023-04-01</openDate>
+            <accountType>Checking</accountType>
+            <AccountOpenDate>2023-04-01</AccountOpenDate>
             <statements>
                 <statement id="1">
                     <startBalance>2382</startBalance>
@@ -33,8 +34,8 @@
 
         <account id="2">
             <balance>9000</balance>
-            <type>Saving</type>
-            <openDate>2021-09-17</openDate>
+            <accountType>Saving</accountType>
+            <AccountOpenDate>2021-09-17</AccountOpenDate>
             <statements>
                 <statement id="3">
                     <startBalance>3000</startBalance>
@@ -54,11 +55,11 @@
 
     <loans>
         <loan id="1">
-            <amount>2200</amount>
+            <loanAmount>2200</loanAmount>
             <interestRate>3.0</interestRate>
-            <type>Student</type>
+            <loanType>Student</loanType>
             <startDate>2023-01-17</startDate>
-            <endDate>2024-01-17</endDate>
+            <closeDate>2024-01-17</closeDate>
         </loan>
     </loans>
 
