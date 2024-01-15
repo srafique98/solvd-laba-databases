@@ -1,14 +1,25 @@
 package com.solvd.laba.parsers.classes;
 
 
+import com.solvd.laba.parsers.jaxb.MyAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Account {
+    @XmlAttribute(name = "id")
     private Long id;
     private double balance;
+    @XmlElement(name = "accountType")
     private String type;
+    @XmlElement(name = "AccountOpenDate")
+    @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate openDate;
+    @XmlElementWrapper(name = "statements")
+    @XmlElement(name = "statement")
     private List<Statement> statements;
 
     public Long getId() {

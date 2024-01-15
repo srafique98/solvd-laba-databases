@@ -1,13 +1,25 @@
 package com.solvd.laba.parsers.classes;
 
+import jakarta.xml.bind.annotation.*;
+
 import java.util.List;
 
+@XmlRootElement(name = "customer")
+@XmlAccessorType(XmlAccessType.FIELD) // will use annotation from fields not from getters and setters (by default Jaxb uses annotations from getters and setters)
 public class Customer {
+    @XmlAttribute(name = "id")
     private Long id;
     private String name;
     private String phoneNumber;
+
+    @XmlElementWrapper(name = "transactions") // tags from customer.xml
+    @XmlElement(name = "transaction")
     private List<Transaction> transactions;
+    @XmlElementWrapper(name = "accounts")
+    @XmlElement(name = "account")
     private List<Account> accounts;
+    @XmlElementWrapper(name = "loans")
+    @XmlElement(name = "loan")
     private List<Loan> loans;
 
     public Long getId() {

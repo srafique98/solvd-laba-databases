@@ -1,11 +1,21 @@
 package com.solvd.laba.parsers.classes;
 
-import java.time.LocalDate;
+import com.solvd.laba.parsers.jaxb.MyAdapter;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import java.time.LocalDate;
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Transaction {
+    @XmlAttribute(name = "id")
     private Long id;
     private double amount;
+    @XmlElement(name = "transactionType")
     private String type;
+    @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate date;
 
     public Long getId() {

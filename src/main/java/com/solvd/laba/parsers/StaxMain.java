@@ -26,7 +26,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParserMain {
+public class StaxMain {
     public static void main(String [] args){
         File xmlFile = new File("src/main/resources/parsers/xml/customer.xml");
         File xsdFile = new File("src/main/resources/parsers/xml/customer.xsd");

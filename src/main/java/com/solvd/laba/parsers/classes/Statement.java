@@ -1,12 +1,22 @@
 package com.solvd.laba.parsers.classes;
 
+import com.solvd.laba.parsers.jaxb.MyAdapter;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.time.LocalDate;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Statement {
+    @XmlAttribute(name = "id")
     private Long id;
     private double startBalance;
     private double endBalance;
+    @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate openDate;
+    @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate endDate;
 
     public Long getId() {
