@@ -1,6 +1,9 @@
 package com.solvd.laba.parsers.classes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.solvd.laba.parsers.jaxb.MyAdapter;
+import com.solvd.laba.parsers.json.JsonAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -13,13 +16,18 @@ import java.time.LocalDate;
 public class Loan {
     @XmlAttribute(name = "id")
     private Long id;
+    @JsonProperty("loanAmount")
     @XmlElement(name = "loanAmount")
     private double amount;
     private double interestRate;
+    @JsonProperty("loanType")
     @XmlElement(name = "loanType")
     private String type;
+    @JsonDeserialize(using = JsonAdapter.class)
     @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate startDate;
+    @JsonDeserialize(using = JsonAdapter.class)
+    @JsonProperty("closeDate")
     @XmlElement(name = "closeDate")
     @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate endDate;

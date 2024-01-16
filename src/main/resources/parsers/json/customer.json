@@ -1,0 +1,70 @@
+{
+  "id": 1,
+  "name": "Name1",
+  "phoneNumber": "293-393-3928",
+  "transactions": [
+    {
+      "id": 1,
+      "amount": 1600.0,
+      "transactionType": "Deposit",
+      "date": "2024-01-07"
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "balance": 300,
+      "accountType": "Checking",
+      "AccountOpenDate": "2023-04-01",
+      "statements": [
+        {
+          "id": 1,
+          "startBalance": 2382,
+          "endBalance": 1800,
+          "openDate": "2023-02-11",
+          "endDate": "2023-03-11"
+        },
+        {
+          "id": 2,
+          "startBalance": 543,
+          "endBalance": 1000,
+          "openDate": "2022-06-11",
+          "endDate": "2023-07-11"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "balance": 9000,
+      "accountType": "Saving",
+      "AccountOpenDate": "2021-09-17",
+      "statements": [
+        {
+          "id": 3,
+          "startBalance": 3000,
+          "endBalance": 6000,
+          "openDate": "2021-10-11",
+          "endDate": "2021-11-11"
+        },
+        {
+          "id": 4,
+          "startBalance": 1500,
+          "endBalance": 3000,
+          "openDate": "2022-06-11",
+          "endDate": "2022-07-11"
+        }
+      ]
+    }
+  ],
+  "loans": [
+    {
+      "id": 1,
+      "loanAmount": 2200,
+      "interestRate": 3.0,
+      "loanType": "Student",
+      "startDate": "2023-01-17",
+      "closeDate": "2024-01-17"
+    }
+  ]
+
+}

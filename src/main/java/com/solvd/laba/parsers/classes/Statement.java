@@ -1,6 +1,8 @@
 package com.solvd.laba.parsers.classes;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.solvd.laba.parsers.jaxb.MyAdapter;
+import com.solvd.laba.parsers.json.JsonAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -14,8 +16,10 @@ public class Statement {
     private Long id;
     private double startBalance;
     private double endBalance;
+    @JsonDeserialize(using = JsonAdapter.class)
     @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate openDate;
+    @JsonDeserialize(using = JsonAdapter.class)
     @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate endDate;
 

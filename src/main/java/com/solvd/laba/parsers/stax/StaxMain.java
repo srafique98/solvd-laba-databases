@@ -1,4 +1,4 @@
-package com.solvd.laba.parsers;
+package com.solvd.laba.parsers.stax;
 
 import com.solvd.laba.parsers.classes.Customer;
 import com.solvd.laba.parsers.classes.Transaction;

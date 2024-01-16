@@ -1,7 +1,10 @@
 package com.solvd.laba.parsers.classes;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.solvd.laba.parsers.jaxb.MyAdapter;
+import com.solvd.laba.parsers.json.JsonAdapter;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -13,8 +16,11 @@ public class Account {
     @XmlAttribute(name = "id")
     private Long id;
     private double balance;
+    @JsonProperty("accountType")
     @XmlElement(name = "accountType")
     private String type;
+    @JsonDeserialize(using = JsonAdapter.class)
+    @JsonProperty("AccountOpenDate")
     @XmlElement(name = "AccountOpenDate")
     @XmlJavaTypeAdapter(MyAdapter.class)
     private LocalDate openDate;
